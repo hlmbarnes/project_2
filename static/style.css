@@ -1,12 +1,17 @@
 body {
   /*background-color: #757575;*/
-  background-color:pink;
+  background-image: url("/cheers.jpeg");
   height: 100%;
 }
 
+.home{
+	text-align:center;
+}
 .container {
-  background-color: white;
+	background-color: #ffffff;
+  opacity: .5;
   min-height: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
+  text-align: center;
 }

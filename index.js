@@ -57,6 +57,11 @@ app.get('/account/signup', function(req, res) {
   res.render('signup'), {alerts: req.flash()};
 });
 
+app.get('/account/login', function(req, res) {
+  res.render('login'), {alerts: req.flash()};
+});
+
+
 app.get('/map', function(req, res){
 	res.render('map');
 });

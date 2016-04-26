@@ -62,13 +62,15 @@ app.post('/account/signup', function(req, res) {
 if(parseInt(req.body.age_verification) <21){
 	return res.redirect('/');
 }
+  console.log(req.body.age_verification)
+  console.log(parseInt(req.body.age_verification, 10))
 	db.user.findOrCreate({
 		where: {
 			username: req.body.username,
 		},
 		defaults: {
 			password: req.body.password,
-			age: req.body.age
+			age: parseInt(req.body.age_verification, 10)
 		}
 	}).spread(function(user, isNew){
 		if(isNew){

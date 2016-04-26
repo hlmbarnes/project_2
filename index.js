@@ -47,7 +47,7 @@ app.post('/account/signin', function(req, res){
     if(user){
       console.log('GOT USER', user.username);
       req.flash('success', 'Successfully logged in.');
-      res.redirect('/tweets');
+      res.redirect('/map');
     }
   })
 })
@@ -57,13 +57,17 @@ app.get('/account/signup', function(req, res) {
   res.render('signup'), {alerts: req.flash()};
 });
 
+app.get('/map', function(req, res){
+	res.render('map');
+});
+
 app.post('/account/signup', function(req, res) {
 	console.log(req.body);
 if(parseInt(req.body.age_verification) <21){
 	return res.redirect('/');
 }
   console.log(req.body.age_verification)
-  console.log(parseInt(req.body.age_verification, 10))
+  // console.log(parseInt(req.body.age_verification, 10))
 	db.user.findOrCreate({
 		where: {
 			username: req.body.username,
@@ -74,9 +78,10 @@ if(parseInt(req.body.age_verification) <21){
 		}
 	}).spread(function(user, isNew){
 		if(isNew){
-			res.redirect('/');
+			res.redirect('/map');
+			res.render('/map');
 		}else {
-			res.redirect('/account/signup');
+			res.redirect('/map');
 		}
 	}).catch(function(err){
 		req.flash('danger', err.message);

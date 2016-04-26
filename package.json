@@ -15,9 +15,11 @@
     "express": "^4.13.4",
     "express-ejs-layouts": "^2.1.0",
     "express-session": "^1.13.0",
+    "flash": "^1.1.0",
     "gh": "^1.12.4",
     "hstore": "0.0.1",
     "pages": "0.0.16",
+    "pg": "^4.5.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.21.0"
   }

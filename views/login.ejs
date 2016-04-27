@@ -1,4 +1,7 @@
 <h1>Sign into Your Account</h1>
+<% if (loginstatus) {  %>
+<p><%= loginstatus %> </p>
+<%} %>
 <form method="POST" action="/account/signin">
   <input type="text" placeholder="username" name="username">
   <input type="password" placeholder="password" name="password">

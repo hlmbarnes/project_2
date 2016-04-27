@@ -12,6 +12,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(ejsLayouts);
 app.use(express.static(__dirname + '/static'));
+
 app.use(session({
   secret: 'abcdefgh',
   resave: false,
@@ -46,10 +47,10 @@ app.post('/account/signin', function(req, res){
     // user successfully logged in
     if(user){
       console.log('GOT USER', user.username);
-      req.flash('success', 'Successfully logged in.');
+      req.flash('loginstatus', 'Successfully logged in.');
       res.redirect('/map');
     }else{
-    	req.flash('failure', 'failed to log in');
+    	req.flash('loginstatus', 'Failed to Log in');
     	res.redirect('/account/login');
     }
   })
@@ -57,16 +58,16 @@ app.post('/account/signin', function(req, res){
 
 
 app.get('/account/signup', function(req, res) {
-  res.render('signup'), {alerts: req.flash()};
+  res.render('signup', {loginstatus: req.flash('loginstatus')});
 });
 
 app.get('/account/login', function(req, res) {
-  res.render('login'), {alerts: req.flash()};
+  res.render('login', {loginstatus: req.flash('loginstatus')});
 });
 
 
 app.get('/map', function(req, res){
-	res.render('map');
+	res.render('map', {loginstatus: req.flash('loginstatus')});
 });
 
 app.post('/account/signup', function(req, res) {

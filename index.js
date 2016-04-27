@@ -40,7 +40,7 @@ app.get('/', function(req, res) {
 app.post('/account/signin', function(req, res){
   // proving we get the username and password
   console.log("sign in:", req.body);
-  var user = req.body.usernamel
+  var user = req.body.username;
   var pass= req.body.password;
   db.user.authenticate(user, pass, function(err, user){
     // user successfully logged in
@@ -48,6 +48,9 @@ app.post('/account/signin', function(req, res){
       console.log('GOT USER', user.username);
       req.flash('success', 'Successfully logged in.');
       res.redirect('/map');
+    }else{
+    	req.flash('failure', 'failed to log in');
+    	res.redirect('/account/login');
     }
   })
 })
@@ -84,7 +87,6 @@ if(parseInt(req.body.age_verification) <21){
 	}).spread(function(user, isNew){
 		if(isNew){
 			res.redirect('/map');
-			res.render('/map');
 		}else {
 			res.redirect('/map');
 		}

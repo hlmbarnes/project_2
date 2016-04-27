@@ -3,8 +3,9 @@ var app = express();
 var ejsLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser')
 var flash = require('connect-flash');
-var BreweryDb = require('brewerydb-node');
-var brewdb = new BreweryDb('BREWERYDB_KEY');
+
+// var BreweryDb = require('brewerydb-node');
+// var brewdb = new BreweryDb('BREWERYDB_KEY');
 var session = require('express-session');
 
 var db = require('./models')
@@ -69,18 +70,15 @@ app.get('/account/login', function(req, res) {
 
 
 app.get('/map', function(req, res){
-	brewdb.beer.getById("avMkil", {}, function()  
-	brewdb.beer.getById(["avMkil", "XcvLTe"], { withBreweries: "Y" }, function(
-		res.render('map', {loginstatus: req.flash('loginstatus')});)); 
-
-	
-
-
+	// brewdb.breweries.getById("avMkil", {}, function(err, data)  
+	// brewdb.beer.getById(["avMkil", "XcvLTe"], { withBreweries: "Y" }, function(
+		res.render('map', {loginstatus: req.flash('loginstatus')}); 
 });
 
 app.post('/account/signup', function(req, res) {
 	console.log(req.body);
 if(parseInt(req.body.age_verification) <21){
+	req.flash("You\'re not old enough to use this site!");
 	return res.redirect('/');
 }
   console.log(req.body.age_verification)

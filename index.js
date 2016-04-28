@@ -73,6 +73,10 @@ app.get('/map', function(req, res){
 	// brewdb.breweries.getById("avMkil", {}, function(err, data)  
 	// brewdb.beer.getById(["avMkil", "XcvLTe"], { withBreweries: "Y" }, function(
 		res.render('map', {loginstatus: req.flash('loginstatus')}); 
+
+});
+app.post('/map', function(req,res){
+    console.log('button clicked');
 });
 
 app.post('/account/signup', function(req, res) {

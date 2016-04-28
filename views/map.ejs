@@ -1,13 +1,12 @@
-<h1> HOPPY HOUR MAP</h1>
+<h1> Find Beer Near You</h1>
 <% if (loginstatus) { %>
 <p> <%= loginstatus %> </p>
 <% } %>
 <div id="map"></div>
-	<button type="submit" name="Add to Favorites">Add to Favorites </button>
-
+<form method="POST" action="/map">
+<input type="submit" value="Add to Favorites">
+<!-- <input type="text" placeholder="breweryname" name="breweryname"> -->
+</form>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgDGbLLscb4wg28QBuyEP-MytnJ9e69EQ&libraries=places"></script>
 
-<!-- process.env.GOOGLE_PLACES_KEY -->
-<!-- <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script> -->
 
-<!-- brewdb.beer.getById("avMkil", {}, callback);   --> 

@@ -8,15 +8,16 @@ body {
 }
 .container {
 	background-color: #ffffff;
-  opacity: .5;
+  opacity: .8;
   min-height: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
   text-align: center;
+  width: 900px;
 }
 
 #map {
   width: 500px;
   height: 400px;
-  background-color: #CCC;
+/*  background-color: #CCC;*/
 }

@@ -11,6 +11,7 @@
   "dependencies": {
     "bcrypt": "^0.8.6",
     "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-ejs-layouts": "^2.1.0",
@@ -18,9 +19,10 @@
     "flash": "^1.1.0",
     "gh": "^1.12.4",
     "hstore": "0.0.1",
+    "node-googleplaces": "^0.1.2",
     "pages": "0.0.16",
-    "pg": "^4.5.3",
+    "pg": "^4.5.5",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.21.0"
+    "sequelize": "^3.22.0"
   }
 }

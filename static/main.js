@@ -14,7 +14,7 @@ function initialize() {
   // Specify location, radius and place types for your Places API search.
   var request = {
     location: Seattle,
-    radius: '500',
+    radius: '800',
     keyword: 'brewery'
   };
    
@@ -40,6 +40,7 @@ function callback(results, status) {
 }
 
 function createMarker(placeOK){
+  
   var marker = new google.maps.Marker({
         map: map,
         position: placeOK.geometry.location
@@ -48,8 +49,9 @@ function createMarker(placeOK){
       google.maps.event.addListener(marker, 'click', function() {
         service.getDetails({placeId: placeOK.place_id}, function(place, status){
         if (status === google.maps.places.PlacesServiceStatus.OK){
-            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-              place.formatted_address + '</div>');
+            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + 
+              place.formatted_address + '<br>'+'<strong>'+place.formatted_phone_number+'</strong><br>'+
+              place.website +'</div>');
               infowindow.open(map, marker);
             }
             else{ alert(status)};

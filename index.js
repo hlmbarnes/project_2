@@ -104,6 +104,25 @@ if(parseInt(req.body.age_verification) <21){
 	})
 });
 
+app.post('/favorites', function(req, res){
+db.favorite.create({
+			name: req.body.name, 
+			address: req.body.address, 
+			hours: req.body.hours,
+			phoneNumber: req.body.phonenumber,
+			website: req.body.website
+	}).then(function(){
+		console.log("this works!");
+		res.redirect("/favorites");
+	});
+});
+
+app.get("/favorites", function (req, res){
+	db.favorite.findAll().then(function(favorites){
+		console.log(favorites);
+		res.render("favorites", {favorites: favorites});
+	});
+});
 
 var port = 3000;
 app.listen(port, function() {

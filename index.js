@@ -115,13 +115,20 @@ app.get('logout', function(req, res) {
   res.redirect('/');
 });
 
+app.get("/favorites", function (req, res){
+	db.favorite.findAll().then(function(favorites){
+		//console.log(favorites);
+		res.render("favorites", {favorites: favorites});
+	});
+});
+
 app.post('/favorites', function(req, res){
 	var brewery = req.body.name;
 	var address = req.body.address;
 	var phone = req.body.phone;
 
-	console.log(req.session);
-	console.log(req.body);
+	//console.log(req.session);
+	//console.log(req.body);
 	db.favorite.findOrCreate({
 		where: {
 			userId: req.session.userId,
@@ -144,12 +151,12 @@ app.post('/favorites', function(req, res){
 	})
 });
 
-app.get("/favorites", function (req, res){
-	db.favorite.findAll().then(function(favorites){
-		console.log(favorites);
-		res.render("favorites", {favorites: favorites});
-	});
-});
+app.delete('/favorites', function(req, res){
+	console.log(req.body.id);
+	db.favorite.destroy({where: {id:req.body.id}}).then(function(favorite){
+		res.status(200).send("Successfully deleted a favorite");
+	})
+})
 
 app.listen(process.env.PORT || 3000)
 

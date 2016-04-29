@@ -80,6 +80,20 @@ function favoriteClick(){
 
 };
 
+$('.delete').click(function(){
+	var elem = $(this).parent();
+	var id = elem.attr('id');
+	$.ajax({
+		url: '/favorites',
+		method: 'DELETE',
+		data: {
+			id: id
+		},
+		success: function(){
+			elem.remove();
+		}
+	})
+});
 //Content structure of info Window for the Markers
 
 

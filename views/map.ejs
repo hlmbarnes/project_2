@@ -7,7 +7,8 @@
 <!-- <input type="submit" value="Add to Favorites"> -->
 <!-- <input type="text" placeholder="breweryname" name="breweryname"> -->
 </form>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgDGbLLscb4wg28QBuyEP-MytnJ9e69EQ&libraries=places"></script>
+<% var test = "https://maps.googleapis.com/maps/api/js?key="+process.env.GOOGLE_PLACES_KEY+"&libraries=places" %> 
+<script type="text/javascript" src=<%= test %>></script>
 
 
 

@@ -131,7 +131,7 @@ app.post('/favorites', function(req, res){
 		if(isNew){
 			res.redirect('/favorites');
 		}else {
-			res.redirect('/map');
+			res.redirect('/favorites');
 		}
 	}).catch(function(err){
 		res.send(err);
@@ -145,8 +145,9 @@ app.get("/favorites", function (req, res){
 	});
 });
 
-var port = 3000;
-app.listen(port, function() {
-  console.log("You're listening to the smooth sounds of port " + port);
-});  
+app.listen(process.env.PORT || 3000)
+// var port = 3000;
+// app.listen(port, function() {
+//   console.log("You're listening to the smooth sounds of port " + port);
+// });  
 

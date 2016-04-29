@@ -15,7 +15,7 @@ function initialize() {
   var request = {
     location: Seattle,
     radius: '800',
-    keyword: 'brewery'
+    keyword: 'Brewery, Brewery'
   };
    
   infowindow = new google.maps.InfoWindow();
@@ -39,6 +39,27 @@ function callback(results, status) {
   else{ alert(status)};
 }
 
+function favoriteClick(){
+ var placeinfo=infowindow.getContent();
+ $.ajax({
+ 	url: '/favorites',
+ 	method: 'POST',
+ 	data: {
+ 		name: $('#marker-heading').text(),
+ 		address: $('#brewery_info').text(),
+ 		phone: $('#strong').text()
+ 	}, 
+ 	success: function(){
+ 		console.log("Success");
+	}
+ })
+// alert('you clicked ' + $("#marker-heading").html());
+
+};
+
+//Content structure of info Window for the Markers
+
+
 function createMarker(placeOK){
   
   var marker = new google.maps.Marker({
@@ -46,18 +67,25 @@ function createMarker(placeOK){
         position: placeOK.geometry.location
       });
 
+
       google.maps.event.addListener(marker, 'click', function() {
         service.getDetails({placeId: placeOK.place_id}, function(place, status){
         if (status === google.maps.places.PlacesServiceStatus.OK){
-            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + 
-              place.formatted_address + '<br>'+'<strong>'+place.formatted_phone_number+'</strong><br>'+
-              place.website +'</div>');
+var contentString = '<div class="marker-info-win">'+
+        '<div class="marker-inner-win"><span class="info-content">'+
+        '<h3 id="marker-heading">'+place.name+'</h3>'+
+        '<span id="brewery_info">'+ place.formatted_address +'</span>'+ '<br>'+'<strong id="strong">'+place.formatted_phone_number+'</strong><br>'+
+        '</span>'+
+           '<br /><button id="favoriteButton" onclick="favoriteClick()" class="make-hidden" title="make Favorite">Make Favorite</button></div></div>'
+            infowindow.setContent(contentString);
+
               infowindow.open(map, marker);
             }
-            else{ alert(status)};
+//             else{ alert(status)};
       });
     
   });
+
 
 }
 google.maps.event.addDomListener(window, 'load', initialize);

@@ -50,6 +50,7 @@ app.post('/account/signin', function(req, res){
     // user successfully logged in
     if(user){
       console.log('GOT USER', user.username);
+      req.session.userId = user.id;
       req.flash('loginstatus', 'Successfully logged in.');
       res.redirect('/map');
     }else{
@@ -109,16 +110,32 @@ if(parseInt(req.body.age_verification) <21){
 });
 
 app.post('/favorites', function(req, res){
-db.favorite.create({
-			name: req.body.name, 
-			address: req.body.address, 
-			hours: req.body.hours,
-			phoneNumber: req.body.phonenumber,
-			website: req.body.website
-	}).then(function(){
-		console.log("this works!");
-		res.redirect("/favorites");
-	});
+	var brewery = req.body.name;
+	var address = req.body.address;
+	var phone = req.body.phone;
+
+	console.log(req.session);
+	console.log(req.body);
+	db.favorite.findOrCreate({
+		where: {
+			userId: req.session.userId,
+			name: brewery
+		},
+		defaults: {
+			address: address,
+			phoneNumber: phone 
+		}
+	}).spread(function(favorite, isNew){
+		console.log(favorite);
+		console.log(isNew);
+		if(isNew){
+			res.redirect('/favorites');
+		}else {
+			res.redirect('/map');
+		}
+	}).catch(function(err){
+		res.send(err);
+	})
 });
 
 app.get("/favorites", function (req, res){

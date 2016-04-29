@@ -5,11 +5,12 @@ module.exports = function(sequelize, DataTypes) {
     address: DataTypes.STRING,
     hours: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
-    website: DataTypes.STRING
+    website: DataTypes.STRING,
+    userId: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        models.favorite.belongsTo(models.user);
       }
     }
   });

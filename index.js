@@ -4,13 +4,10 @@ var ejsLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser')
 var flash = require('connect-flash');
 
-// var BreweryDb = require('brewerydb-node');
-// var brewdb = new BreweryDb('BREWERYDB_KEY');
 var session = require('express-session');
 
 var db = require('./models')
 
-var app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(ejsLayouts);
@@ -33,12 +30,14 @@ app.use(function(req,res, next){
 	  	next()
 	  })
 	} else {
+		req.currentUser= false;
+		res.locals.currentUser = false;
 		next();
 	}
 })
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index', {alerts: req.flash()});
 });
 
 app.post('/account/signin', function(req, res){
@@ -69,6 +68,11 @@ app.get('/account/login', function(req, res) {
   res.render('login', {loginstatus: req.flash('loginstatus')});
 });
 
+app.get('/logout', function(req, res) {
+  req.session.userId = false;
+  req.flash('danger', 'Successfully logged out.');
+  res.redirect('/');
+});
 
 app.get('/map', function(req, res){
 	res.render('map', {loginstatus: req.flash('loginstatus')}); 
@@ -85,7 +89,6 @@ if(parseInt(req.body.age_verification) <21){
 	return res.redirect('/');
 }
   console.log(req.body.age_verification)
-  // console.log(parseInt(req.body.age_verification, 10))
 	db.user.findOrCreate({
 		where: {
 			username: req.body.username,
@@ -105,6 +108,11 @@ if(parseInt(req.body.age_verification) <21){
 		console.log("error:", err);
 		res.send(err);
 	})
+});
+
+app.get('logout', function(req, res) {
+  req.session.userId = false;
+  res.redirect('/');
 });
 
 app.post('/favorites', function(req, res){
@@ -144,8 +152,5 @@ app.get("/favorites", function (req, res){
 });
 
 app.listen(process.env.PORT || 3000)
-// var port = 3000;
-// app.listen(port, function() {
-//   console.log("You're listening to the smooth sounds of port " + port);
-// });  
+
 

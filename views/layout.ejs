@@ -11,6 +11,13 @@
   <body>
     <div class="container">
       <% include nav %>
+      <% if(typeof alerts !== 'undefined') { %>
+        <% for (key in alerts) { %>
+        <% alerts[key].forEach(function(thisMsg){ %>
+          <div class="alert alert-<%= key %>"><%= thisMsg %></div>
+          <% }); %>
+        <% } %>
+        <% } %>
       <%- body %>
     </div>
     <script scr="https://code.jquery.com/jquery-2.2.3.min.js"></script>

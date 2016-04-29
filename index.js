@@ -61,6 +61,10 @@ app.post('/account/signin', function(req, res){
 })
 
 
+app.get('/googlea00870f6a677e21c', function(req, res) {
+  res.render('googlea00870f6a677e21c');
+});
+
 app.get('/account/signup', function(req, res) {
   res.render('signup', {loginstatus: req.flash('loginstatus')});
 });

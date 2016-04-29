@@ -1,6 +1,7 @@
 body {
   background-image: url("/cheers.jpeg");
   height: 100%;
+  color:black;
 }
 
 .home{
@@ -20,4 +21,8 @@ body {
   width: 500px;
   height: 400px;
 /*  background-color: #CCC;*/
+}
+
+#favoriteList{
+  border:black 1px;
 }

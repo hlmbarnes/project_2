@@ -1,6 +1,11 @@
 
 <h1> Favorite Beer Spots </h1>
 <% favorites.forEach(function(favorite){ %>
-		<p><%= favorite.title %></p>
+	<div id="favoriteList">
+		<p><%= favorite.name %></p>
+		<p><%= favorite.address %></p>
+		<p><%= favorite.phoneNumber %></p>
+
 	<button type="button">Delete</button></a>
+	</div>
 <% }); %>

@@ -61,10 +61,6 @@ app.post('/account/signin', function(req, res){
 })
 
 
-app.get('/googlea00870f6a677e21c', function(req, res) {
-  res.render('googlea00870f6a677e21c');
-});
-
 app.get('/account/signup', function(req, res) {
   res.render('signup', {loginstatus: req.flash('loginstatus')});
 });
@@ -75,11 +71,9 @@ app.get('/account/login', function(req, res) {
 
 
 app.get('/map', function(req, res){
-	// brewdb.breweries.getById("avMkil", {}, function(err, data)  
-	// brewdb.beer.getById(["avMkil", "XcvLTe"], { withBreweries: "Y" }, function(
-		res.render('map', {loginstatus: req.flash('loginstatus')}); 
-
+	res.render('map', {loginstatus: req.flash('loginstatus')}); 
 });
+
 app.post('/map', function(req,res){
     console.log('button clicked');
 });

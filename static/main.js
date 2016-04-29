@@ -53,7 +53,6 @@ function favoriteClick(){
  		console.log("Success");
 	}
  })
-// alert('you clicked ' + $("#marker-heading").html());
 
 };
 
@@ -81,7 +80,6 @@ var contentString = '<div class="marker-info-win">'+
 
               infowindow.open(map, marker);
             }
-//             else{ alert(status)};
       });
     
   });

@@ -4,7 +4,12 @@ var service;
 
 function initialize() {
   var Seattle = new google.maps.LatLng(47.6062, -122.335167);
-
+	 if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      map.setCenter(initialLocation);
+    });
+  }
   map = new google.maps.Map(document.getElementById('map'), {
     center: Seattle,
     zoom: 15,
@@ -13,7 +18,7 @@ function initialize() {
 
   // Specify location, radius and place types for your Places API search.
   var request = {
-    location: Seattle,
+//     location: Seattle,
     radius: '800',
     keyword: 'Brewery, Brewery'
   };

@@ -1,29 +1,48 @@
 var map;
 var infowindow;
 var service;
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+};
 function initialize() {
   var Seattle = new google.maps.LatLng(47.6062, -122.335167);
-	 if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      map.setCenter(initialLocation);
-    });
-  }
+
   map = new google.maps.Map(document.getElementById('map'), {
     center: Seattle,
     zoom: 15,
     scrollwheel: false
   });
+  infowindow = new google.maps.InfoWindow();
+if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+      var initialLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      map.setCenter(initialLocation);
+      doSearch();
+    }, function() {
+      handleLocationError(true, infowindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infowindow, map.getCenter());
+  }
 
-  // Specify location, radius and place types for your Places API search.
+}
+function doSearch(){
+	 // Specify location, radius and place types for your Places API search.
   var request = {
-//     location: Seattle,
+     location: map.getCenter(),
     radius: '800',
     keyword: 'Brewery, Brewery'
   };
    
-  infowindow = new google.maps.InfoWindow();
+
 
   // Create the PlaceService and send the request.
   // Handle the callback with an anonymous function.

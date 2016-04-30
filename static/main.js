@@ -39,7 +39,7 @@ function doSearch(){
   var request = {
      location: map.getCenter(),
     radius: '800',
-    keyword: 'Brewery, Brewery'
+    keyword: '(Brewery) OR (brewery) OR (Pub) OR (pub)'
   };
    
 

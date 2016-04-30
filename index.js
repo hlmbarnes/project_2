@@ -50,7 +50,6 @@ app.post('/account/signin', function(req, res){
     if(user){
       console.log('GOT USER', user.username);
       req.session.userId = user.id;
-      req.flash('loginstatus', 'Successfully logged in.');
       res.redirect('/map');
     }else{
     	req.flash('loginstatus', 'Failed to Log in');
@@ -85,7 +84,8 @@ app.post('/map', function(req,res){
 app.post('/account/signup', function(req, res) {
 	console.log(req.body);
 if(parseInt(req.body.age_verification) <21){
-	req.flash("You\'re not old enough to use this site!");
+	req.flash('danger', "You're not old enough to use this site!");
+	// req.flash("You\'re not old enough to use this site!");
 	return res.redirect('/');
 }
   console.log(req.body.age_verification)

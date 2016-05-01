@@ -78,7 +78,7 @@ app.get('/map', function(req, res){
 });
 
 app.post('/map', function(req,res){
-    console.log('button clicked');
+    console.log('button clicked');
 });
 
 app.post('/account/signup', function(req, res) {
@@ -159,5 +159,3 @@ app.delete('/favorites', function(req, res){
 })
 
 app.listen(process.env.PORT || 3000)
-
-

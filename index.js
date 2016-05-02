@@ -42,47 +42,56 @@ app.get('/', function(req, res) {
 
 app.post('/account/signin', function(req, res){
   // proving we get the username and password
-  console.log("sign in:", req.body);
   var user = req.body.username;
   var pass= req.body.password;
+  if(user !=undefined){
   db.user.authenticate(user, pass, function(err, user){
     // user successfully logged in
     if(user){
       console.log('GOT USER', user.username);
       req.session.userId = user.id;
-      res.redirect('/map');
+      req.flash('success','Successfully logged in, click <a href="/map">map</a> to search');
+      res.redirect('/');
     }else{
-    	req.flash('loginstatus', 'Failed to Log in');
-    	res.redirect('/account/login');
+    	req.flash('danger', 'Invalid password or username');
+    	res.redirect('/');
     }
   })
+} else{
+	   	req.flash('danger', 'Invalid password or username');
+    	res.redirect('/');
+}
 })
 
 
-app.get('/account/signup', function(req, res) {
-  res.render('signup', {loginstatus: req.flash('loginstatus')});
-});
 
 app.get('/account/login', function(req, res) {
-  res.render('login', {loginstatus: req.flash('loginstatus')});
+  res.render('login');
 });
 
 app.get('/logout', function(req, res) {
-  req.session.userId = false;
-  req.flash('danger', 'Successfully logged out.');
+  req.session.userId = undefined;
+  req.flash('info', 'Successfully logged out.');
+  // req.session.destroy();
   res.redirect('/');
 });
 
 app.get('/map', function(req, res){
-	res.render('map', {loginstatus: req.flash('loginstatus')}); 
+	if (req.session.userId !== undefined)
+	{
+	  res.render('map'); 	 
+	}else {
+		req.flash('danger','You must log in first - please click <a href="/account/login">log in</a> to search ')
+		res.redirect('/');
+	}
 });
 
 app.post('/map', function(req,res){
-    console.log('button clicked');
+    console.log('button clicked');
 });
 
 app.post('/account/signup', function(req, res) {
-	console.log(req.body);
+	// console.log(req.body);
 if(parseInt(req.body.age_verification) <21){
 	req.flash('danger', "You're not old enough to use this site!");
 	// req.flash("You\'re not old enough to use this site!");
@@ -99,6 +108,7 @@ if(parseInt(req.body.age_verification) <21){
 		}
 	}).spread(function(user, isNew){
 		if(isNew){
+			req.session.userId = user.id;
 			res.redirect('/map');
 		}else {
 			res.redirect('/map');
@@ -110,16 +120,23 @@ if(parseInt(req.body.age_verification) <21){
 	})
 });
 
-app.get('logout', function(req, res) {
-  req.session.userId = false;
-  res.redirect('/');
-});
+
 
 app.get("/favorites", function (req, res){
-	db.favorite.findAll().then(function(favorites){
+
+	 if (req.session.userId !== undefined)
+	 {
+	  db.favorite.findAll(
+	{
+			where: {userId: req.session.userId}}
+			).then(function(favorites){
 		//console.log(favorites);
-		res.render("favorites", {favorites: favorites});
-	});
+			res.render("favorites", {favorites: favorites});
+		});
+	} else{
+		req.flash('danger','You must log in first - please click <a href="/account/login">log in</a> to search ')
+		res.redirect('/');
+	}
 });
 
 app.post('/favorites', function(req, res){
@@ -159,3 +176,5 @@ app.delete('/favorites', function(req, res){
 })
 
 app.listen(process.env.PORT || 3000)
+
+

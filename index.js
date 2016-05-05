@@ -89,6 +89,10 @@ app.get('/map', function(req, res){
 app.post('/map', function(req,res){
     console.log('button clicked');
 });
+app.get('/account/signup', function(req, res) {
+  res.render('signup', {loginstatus: req.flash('loginstatus')});
+});
+
 
 app.post('/account/signup', function(req, res) {
 	// console.log(req.body);

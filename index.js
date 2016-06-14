@@ -45,23 +45,23 @@ app.post('/account/signin', function(req, res){
   var user = req.body.username;
   var pass= req.body.password;
   if(user !=undefined){
-  db.user.authenticate(user, pass, function(err, user){
-    // user successfully logged in
-    if(user){
-      console.log('GOT USER', user.username);
-      req.session.userId = user.id;
-      req.flash('success','Successfully logged in, click <a href="/map">map</a> to search');
-      res.redirect('/');
-    }else{
-    	req.flash('danger', 'Invalid password or username');
-    	res.redirect('/');
-    }
-  })
-} else{
-	   	req.flash('danger', 'Invalid password or username');
-    	res.redirect('/');
-}
-})
+    db.user.authenticate(user, pass, function(err, user){
+      // user successfully logged in
+      if(user){
+        console.log('GOT USER', user.username);
+        req.session.userId = user.id;
+        req.flash('success','Successfully logged in, click <a href="/map">map</a> to search');
+        res.redirect('/');
+      }else{
+      	req.flash('danger', 'Invalid password or username');
+      	res.redirect('/');
+      }
+    });
+  } else{
+    req.flash('danger', 'Invalid password or username');
+    res.redirect('/');
+  }
+});
 
 
 
